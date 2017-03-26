@@ -9,18 +9,18 @@ A small utility that scans a given directory, containing Movies, and tries to fe
 The fetched information is then stored in a Local Database, for later usages. 
 The created movies' database can also be viewed using the reader utility provided.
 
-**Requires Python 3.3+**
+**Requires Python 3.3+** ( and Internet Connection :sweat_smile: )
 
 #### Python Dependencies :-
 - sqlite3              (`pip3 install sqlite3`)
 - terminaltables (`pip3 install terminaltables`)
 - requests           (`pip3 install requests`)
-- Internet Connection :sweat_smile: 
+
 
 #### Example Usages :-
 To build a movies' database :- 
 ```
-python3 build_db.py <movie_directory_path>
+python3 create_db.py <movies_directory_path>
 ```
 To read a movies' database :- 
 ```
@@ -28,7 +28,7 @@ python3 read_db.py <database_file_path>
 ```
 
 #### Screenshots :-
-- **Building** the Movies Database (`build_db.py`) , 
+- **Building** the Movies Database (`create_db.py`) , 
 ![Image 1](Images/1.png "1")   
 
 - **Reading** the Movies Database (`read_db.py`) , 
