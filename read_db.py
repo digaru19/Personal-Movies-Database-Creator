@@ -12,7 +12,7 @@ AUTHOR:
     Shubham Dighe <digsblogger@gmail.com>
 
 EXAMPLE Usage:
-    python read_db.py <DATABASE_FILE_PATH>
+    python3 read_db.py <DATABASE_FILE_PATH>
 
 '''
 
