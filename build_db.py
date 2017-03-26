@@ -14,7 +14,7 @@ AUTHOR:
     Shubham Dighe <digsblogger@gmail.com>
 
 EXAMPLE Usage:
-    python run.py <DIRECTORY_PATH>
+    python3 build_db.py <MOVIE_DIRECTORY_PATH>
 
 '''
 from __future__ import print_function
