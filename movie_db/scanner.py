@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import sys
 import re
 import requests
 import sqlite3
@@ -49,11 +48,9 @@ def sanitize_movie_name(movie_name):
 
 def print_movie_info(movie_data):
     print("    " + '='*50)
-    print("\t Movie Title :- " +
-          str(movie_data.get('Title', 'N/A').encode('utf-8', 'ignore')))
-    print("\t Year  :- " +
-          str(movie_data.get('Year', 'N/A').encode('utf-8', 'ignore')))
-    print("\t IMDB Rating  :- " + str(movie_data.get('imdbRating', 'N/A').encode('utf-8', 'ignore')))
+    print("\t Movie Title :- %s " % movie_data.get('Title', 'N/A'))
+    print("\t Year  :- %s" % movie_data.get('Year', 'N/A'))
+    print("\t IMDB Rating  :- %s" % movie_data.get('imdbRating', 'N/A'))
     print("    " + '='*50)
 
 
@@ -70,10 +67,12 @@ def write_to_db(cursor, movie_details):
     global new_movies_found, num_movies_found
 
     num_movies_found += 1
+
     # If Movie details already exist in the database, skip
     movie_name = movie_details.get('Title', 'N/A')
     cursor.execute("SELECT count(*) from movies "
                    "where title = ?", (movie_name,))
+
     if cursor.fetchone()[0] >= 1:
         print("    Movie :- '%s' already exists "
               "in the Local Database" % movie_name)
@@ -108,7 +107,6 @@ def fetch_movie_data(params):
 
     while tries < 4:
         try:
-            # print("Getting it ")
             data = requests.get(url=API_URL, params=params)
             break
         except requests.exceptions.RequestException:
@@ -127,9 +125,6 @@ def fetch_movie_data(params):
 
     if data.get('Response', 'False') == 'True':
         # Found the (correct) movie. Hope so :)
-        if sys.version_info < (3,):
-            for i in data:
-                data[i] = data[i].encode('utf-8', 'ignore')
         found = True
 
     if found:
@@ -143,7 +138,7 @@ def scan_directory(directory):
     conn = init_database()
     cursor = conn.cursor()
 
-    directory = os.path.normpath(directory)
+    directory = os.path.abspath(directory)
 
     file_list = os.listdir(directory)
 
