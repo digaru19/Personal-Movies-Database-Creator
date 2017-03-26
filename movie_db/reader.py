@@ -33,9 +33,12 @@ def calc_column_width():
     global column_width
     width = get_terminal_size((80, 24))[0]
 
-    column_width['title'] = int(width * 0.2)
+    column_width['title'] = int(width * 0.20)
     column_width['imdb'] = int(width * 0.06)
-    column_width['title'] = int(width * 0.2)
+    column_width['year'] = int(width * 0.10)
+    column_width['genre'] = int(width * 0.15)
+    column_width['released'] = int(width * 0.10)
+    column_width['plot'] = int(width * 0.40)
 
 
 def clear_screen():
