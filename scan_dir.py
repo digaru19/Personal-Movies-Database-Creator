@@ -17,14 +17,11 @@ EXAMPLE Usage:
     python run.py <DIRECTORY_PATH>
 
 '''
-
+from __future__ import print_function
 import os
 import sys
 from movie_db import scan_directory
 
-if sys.version_info < (3,):
-    print("Please use Python 3.3+")
-    sys.exit()
 
 if len(sys.argv) < 2:
     print("Enter the directory to scan :- ", end='')
