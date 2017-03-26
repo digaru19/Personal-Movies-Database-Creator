@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 '''
@@ -18,17 +18,9 @@ EXAMPLE Usage:
 
 '''
 
-
-from __future__ import print_function
-
 import os
 import sys
 from movie_db import scan_directory
-
-try:
-    input = raw_input
-except NameError:
-    pass
 
 if len(sys.argv) < 2:
     print("Enter the directory to scan :- ", end='')

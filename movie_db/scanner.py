@@ -1,7 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
-from __future__ import print_function
 
 import sys
 import re
@@ -10,10 +8,6 @@ import sqlite3
 import os
 import time
 
-try:
-    str = unicode
-except NameError:
-    pass
 
 API_URL = 'http://www.omdbapi.com/'
 LOCAL_DB = 'movies.db'

@@ -6,39 +6,10 @@ from os import system
 from terminaltables import AsciiTable
 from shutil import get_terminal_size
 
-try:
-    input = raw_input
-except NameError:
-    pass
 
 # Global Database handles
 conn = None
 c = None
-
-column_width = {
-    'title': None,
-    'imdb': None,
-    'year': None,
-    'genre': None,
-    'released': None,
-    'actors': None,
-    'runtime': None,
-    'awards': None,
-    'plot': None,
-    }
-
-
-def calc_column_width():
-
-    global column_width
-    width = get_terminal_size((80, 24))[0]
-
-    column_width['title'] = int(width * 0.20)
-    column_width['imdb'] = int(width * 0.06)
-    column_width['year'] = int(width * 0.10)
-    column_width['genre'] = int(width * 0.15)
-    column_width['released'] = int(width * 0.10)
-    column_width['plot'] = int(width * 0.40)
 
 
 def clear_screen():
@@ -48,7 +19,8 @@ def clear_screen():
 
 
 def display_table(table):
-    print(table.table.encode('utf-8'))
+    print("\n")
+    print(table.table)
 
 
 def tabularize(table_data):
@@ -60,12 +32,15 @@ def tabularize(table_data):
 
 def format_width(string, width):
 
-    if len(string) <= width:
+    term_width = get_terminal_size((80, 20))[0]
+    col_width = int(term_width * (width / 100))
+
+    if len(string) <= col_width:
         return string
 
-    s = width
+    s = col_width
 
-    for i in range(width, 1, -1):
+    for i in range(col_width, 1, -1):
         if string[i] == ' ':
             s = i
             break
@@ -76,8 +51,9 @@ def format_width(string, width):
 
 def display_movie_details(movie):
     'Print the details of the selected movie in a tabulated form'
-    title = movie[1].encode('utf-8')
-    year = movie[2].encode('utf-8')
+    
+    title = movie[1]
+    year = movie[2]
     imdbRating = movie[3]
     table = []
 
@@ -93,22 +69,22 @@ def display_movie_details(movie):
         released = 'N/A'
         runtime = 'N/A'
     else:
-        plot = movie_info[0].encode('utf-8', 'ignore')
-        actors = movie_info[1].encode('utf-8', 'ignore')
-        awards = movie_info[2].encode('utf-8', 'ignore')
-        genre = movie_info[3].encode('utf-8', 'ignore')
-        released = movie_info[4].encode('utf-8', 'ignore')
-        runtime = movie_info[5].encode('utf-8', 'ignore')
+        plot = movie_info[0]
+        actors = movie_info[1]
+        awards = movie_info[2]
+        genre = movie_info[3]
+        released = movie_info[4]
+        runtime = movie_info[5]
 
-    table.append(['Movie Title', format_width(title, 20)])
+    table.append(['Movie Title', title])
     table.append(['Year', year])
     table.append(['IMDB Rating', str(imdbRating)])
-    table.append(['Genre', format_width(genre, 20)])
+    table.append(['Genre', genre])
     table.append(['Released', released])
-    table.append(['Actors', format_width(actors, 25)])
+    table.append(['Actors', actors])
     table.append(['Awards', awards])
-    table.append(['Runtime', format_width(runtime, 15)])
-    table.append(['Plot', format_width(plot, 35)])
+    table.append(['Runtime', runtime])
+    table.append(['Plot', format_width(plot, 70)])
 
     table = tabularize(table)
     display_table(table)
@@ -128,7 +104,7 @@ def display_movie_details(movie):
     print("#" * 60)
     '''
 
-    print("\n\t Press ENTER to continue ..... ", end='')
+    print("\n\t     Press ENTER to continue ..... ", end='')
     input()
     clear_screen()
 
@@ -149,6 +125,10 @@ def build_movie_table():
             # If the movie name is greater than 28 characters, format it well
             # to display it within the column width
             # TODO :- Make it more generic
+
+            row[0] = format_width(row[0], 50)
+
+            '''
             if len(row[0].encode('utf-8', 'ignore')) > 28:
                 s = 0
                 for k in range(28, len(i[0])):
@@ -156,6 +136,7 @@ def build_movie_table():
                         s = k
                         break
                 row[0] = row[0][:s] + '\n' + row[0][s:]
+            '''
 
             if str(row[2]) == 'N/A':
                 imdb_na.append(row)
@@ -173,7 +154,7 @@ def build_movie_table():
 
 
 def db_reader(db_file):
-    'Main driver function'
+    'Main driver function for the reader program'
 
     # Initialize Database Handlers
     global conn, c
@@ -190,13 +171,14 @@ def db_reader(db_file):
 
         try:
             choice = int(choice)
+            if(choice < 0 or choice > len(movie_table)):
+                raise ValueError
         except ValueError:
             print("\n\t Please enter a valid choice ..\n")
             continue
 
-        if(choice < 0 or choice > len(movie_table)+1):
-            print("\n\t Please enter a valid choice ..\n")
         if choice == 0:
+            print("\n")
             break
 
         display_movie_details(movie_table[choice])
