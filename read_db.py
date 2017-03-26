@@ -20,16 +20,15 @@ import os
 import sys
 from movie_db import db_reader
 
-try:
-    input = raw_input
-except NameError:
-    pass
+if sys.version_info < (3,):
+    print("Please use Python 3.3+")
+    sys.exit()
 
 DEFAULT_DB = 'movies.db'
 
 if len(sys.argv) < 2:
-    print("No Database File specified !!")
-    print("Using default : %s " % DEFAULT_DB)
+    print("\t No Database File specified !!")
+    print("\t Using default : %s " % DEFAULT_DB)
     db_file = DEFAULT_DB
 else:
     db_file = sys.argv[1]
