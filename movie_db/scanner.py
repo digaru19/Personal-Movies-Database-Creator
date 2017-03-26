@@ -24,8 +24,8 @@ def init_database():
     c.execute("""CREATE TABLE IF NOT EXISTS movies
                ( movie_id INTEGER PRIMARY KEY,
                title VARCHAR(200), year VARCHAR(20), imdbRating REAL,
-               plot TEXT, actors TEXT, awards TEXT, genre VARCHAR(80),
-               released VARCHAR(40), runtime VARCHAR(25), file VARCHAR(70));
+               plot TEXT, actors TEXT, awards TEXT, genre VARCHAR(100),
+               released VARCHAR(40), runtime VARCHAR(50), file VARCHAR(250));
                 """)
 
     conn.commit()
