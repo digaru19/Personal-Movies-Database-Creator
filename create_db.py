@@ -14,9 +14,10 @@ AUTHOR:
     Shubham Dighe <digsblogger@gmail.com>
 
 EXAMPLE Usage:
-    python3 build_db.py <MOVIE_DIRECTORY_PATH>
+    python3 create_db.py <MOVIES_DIRECTORY_PATH>
 
 '''
+
 from __future__ import print_function
 import os
 import sys
