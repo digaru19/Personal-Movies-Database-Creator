@@ -16,6 +16,7 @@ new_movies_found = 0
 
 def init_database():
     'Initializes a Local Database'
+    print("Local Database File :- %s" % LOCAL_DB)
     conn = sqlite3.connect(LOCAL_DB)
     c = conn.cursor()
 
