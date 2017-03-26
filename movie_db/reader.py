@@ -87,7 +87,7 @@ def display_movie_details(movie):
     table = tabularize(table)
     display_table(table)
 
-    print("\n\t     Press ENTER to continue ..... ", end='')
+    print("\n\t  Press ENTER to go back to Main Menu ..... ", end='')
     input()
     clear_screen()
 
@@ -135,7 +135,8 @@ def db_reader(db_file):
     display_table(table_view)
 
     while 1:
-        print("\n\n\t Enter a movie number (0 to exit) :- ", end='')
+        print("\n To view more details, enter a movie number (0 to exit) :- ",
+              end='')
         choice = input()
 
         try:
