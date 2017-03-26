@@ -3,6 +3,7 @@
 
 import sqlite3
 from os import system
+from os import sep as path_sep
 from terminaltables import AsciiTable
 from shutil import get_terminal_size
 
@@ -30,10 +31,12 @@ def tabularize(table_data):
     return table
 
 
-def format_width(string, width):
+def format_width(string, width, sep=' '):
+    'Formats a string within the given width, where width is in percentage \
+    of the total terminal width'
 
     term_width = get_terminal_size((80, 20))[0]
-    col_width = int(term_width * (width / 100))
+    col_width = int((term_width * width) / 100)
 
     if len(string) <= col_width:
         return string
@@ -41,68 +44,48 @@ def format_width(string, width):
     s = col_width
 
     for i in range(col_width, 1, -1):
-        if string[i] == ' ':
+        if string[i] == sep:
             s = i
             break
 
-    string = string[:s] + '\n' + format_width(string[s+1:], width)
+    string = string[:s] + sep + '\n' + format_width(string[s+1:], width)
     return string
 
 
 def display_movie_details(movie):
     'Print the details of the selected movie in a tabulated form'
-    
-    title = movie[1]
+
+    title = movie[1].replace('\n', '')
     year = movie[2]
     imdbRating = movie[3]
     table = []
 
     movie_info = c.execute(
-        "select plot,actors,awards,genre,released,runtime from movies where "
-        "title=? and year=?", (title, year))
+        "SELECT plot, actors, awards, genre, released, runtime, file "
+        "FROM movies WHERE title=? AND year=?", (title, year))
     movie_info = movie_info.fetchone()
-    if movie_info is None:
-        plot = 'N/A'
-        actors = 'N/A'
-        awards = 'N/A'
-        genre = 'N/A'
-        released = 'N/A'
-        runtime = 'N/A'
-    else:
-        plot = movie_info[0]
-        actors = movie_info[1]
-        awards = movie_info[2]
-        genre = movie_info[3]
-        released = movie_info[4]
-        runtime = movie_info[5]
 
-    table.append(['Movie Title', title])
+    plot = movie_info[0]
+    actors = movie_info[1]
+    awards = movie_info[2]
+    genre = movie_info[3]
+    released = movie_info[4]
+    runtime = movie_info[5]
+    file = movie_info[6]
+
+    table.append(['Movie Title', format_width(title, 70)])
     table.append(['Year', year])
     table.append(['IMDB Rating', str(imdbRating)])
-    table.append(['Genre', genre])
-    table.append(['Released', released])
-    table.append(['Actors', actors])
-    table.append(['Awards', awards])
-    table.append(['Runtime', runtime])
+    table.append(['Genre', format_width(genre, 70)])
+    table.append(['Released', format_width(released, 70)])
+    table.append(['Actors', format_width(actors, 70)])
+    table.append(['Awards', format_width(awards, 70)])
+    table.append(['Runtime', format_width(runtime, 70)])
     table.append(['Plot', format_width(plot, 70)])
+    table.append(['File Location', format_width(file, 70, path_sep)])
 
     table = tabularize(table)
     display_table(table)
-
-    '''
-    print("#" * 60)
-    print("\n\t Movie Name :-  " + title)
-    print("\n\n\t Year :-  " + year)
-    print("\n\t IMDB Rating :-  " + str(imdbRating))
-    print("\n\t Genre :-  " + genre)
-    print("\n\t Released :-  " + released)
-    print("\n\t Actors :-  " + actors)
-    print("\n\t Awards :-  " + awards)
-    print("\n\t Runtime :-  " + runtime)
-    print("\n\t Plot :- " + plot)
-    print("\n")
-    print("#" * 60)
-    '''
 
     print("\n\t     Press ENTER to continue ..... ", end='')
     input()
@@ -117,26 +100,12 @@ def build_movie_table():
         # List of movies which cannot be sorted based on IMDB ratings
         imdb_na = []
 
-        for i in c.execute("select title,year,imdbRating from movies "
-                           " order by imdbRating desc"):
+        for i in c.execute("SELECT title,year,imdbRating FROM movies "
+                           "ORDER BY imdbRating DESC"):
 
             row = list(i)
 
-            # If the movie name is greater than 28 characters, format it well
-            # to display it within the column width
-            # TODO :- Make it more generic
-
-            row[0] = format_width(row[0], 50)
-
-            '''
-            if len(row[0].encode('utf-8', 'ignore')) > 28:
-                s = 0
-                for k in range(28, len(i[0])):
-                    if row[0][k] == ' ':
-                        s = k
-                        break
-                row[0] = row[0][:s] + '\n' + row[0][s:]
-            '''
+            row[0] = format_width(row[0], 60)
 
             if str(row[2]) == 'N/A':
                 imdb_na.append(row)
