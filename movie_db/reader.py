@@ -75,7 +75,7 @@ def display_movie_details(movie):
 
     table.append(['Movie Title', format_width(title, 70)])
     table.append(['Year', year])
-    table.append(['IMDB Rating', str(imdbRating)])
+    table.append(['IMDb Rating', str(imdbRating)])
     table.append(['Genre', format_width(genre, 70)])
     table.append(['Released', format_width(released, 70)])
     table.append(['Actors', format_width(actors, 70)])
@@ -95,7 +95,7 @@ def display_movie_details(movie):
 def build_movie_table():
 
         # Skeleton of Table Structure
-        movie_table = [['Sr.No.', 'TITLE', 'YEAR', 'IMDB']]
+        movie_table = [['Sr.No.', 'TITLE', 'YEAR', 'IMDb']]
 
         # List of movies which cannot be sorted based on IMDB ratings
         imdb_na = []

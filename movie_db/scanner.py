@@ -7,7 +7,6 @@ import sqlite3
 import os
 import time
 
-
 API_URL = 'http://www.omdbapi.com/'
 LOCAL_DB = 'movies.db'
 num_movies_found = 0
@@ -16,7 +15,7 @@ new_movies_found = 0
 
 def init_database():
     'Initializes a Local Database'
-    print("Local Database File :- %s" % LOCAL_DB)
+    print("\n Local Database File :- %s" % LOCAL_DB)
     conn = sqlite3.connect(LOCAL_DB)
     c = conn.cursor()
 
@@ -51,7 +50,7 @@ def print_movie_info(movie_data):
     print("    " + '='*50)
     print("\t Movie Title :- %s " % movie_data.get('Title', 'N/A'))
     print("\t Year  :- %s" % movie_data.get('Year', 'N/A'))
-    print("\t IMDB Rating  :- %s" % movie_data.get('imdbRating', 'N/A'))
+    print("\t IMDb Rating  :- %s" % movie_data.get('imdbRating', 'N/A'))
     print("    " + '='*50)
 
 
