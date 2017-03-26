@@ -5,24 +5,27 @@
 #### Open-Source [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/digaru19/Personal-Movies-Database-Creator) 
 
 
-A small utility that scans a given directory, that contains Movies, and tries to fetch information about them from online APIs.
-The fetched information is then stored in a Local SQLite Database, for later usages. 
+A small utility that scans a given directory, containing Movies, and tries to fetch information about them from online APIs.
+The fetched information is then stored in a Local Database, for later usages. 
+The created movies' database can also be viewed using the reader utility provided.
 
-#### Usage :-
-To build a database :- 
-```
-python3 build_db.py <movie_directory_path>
-```
-To read a database :- 
-```
-python3 read_db.py <database_file_path>
-```
+**Requires Python 3.3+**
 
-#### Dependencies :-
+#### Python Dependencies :-
 - sqlite3              (`pip3 install sqlite3`)
 - terminaltables (`pip3 install terminaltables`)
 - requests           (`pip3 install requests`)
 - Internet Connection :sweat_smile: 
+
+#### Example Usages :-
+To build a movies' database :- 
+```
+python3 build_db.py <movie_directory_path>
+```
+To read a movies' database :- 
+```
+python3 read_db.py <database_file_path>
+```
 
 #### Screenshots :-
 - **Building** the Movies Database (`build_db.py`) , 
