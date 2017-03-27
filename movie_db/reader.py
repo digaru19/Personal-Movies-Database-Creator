@@ -141,7 +141,7 @@ def db_reader(db_file):
 
         try:
             choice = int(choice)
-            if(choice < 0 or choice > len(movie_table)):
+            if(choice < 0 or choice >= len(movie_table)):
                 raise ValueError
         except ValueError:
             print("\n\t Please enter a valid choice ..\n")
